@@ -1,4 +1,4 @@
-# yuki
+# yuki [![Build Status](https://travis-ci.org/dieselpoweredkitten/yuki.png?branch=master)](https://travis-ci.org/dieselpoweredkitten/yuki)
 
 Naive Bayes Classifier implemented in Clojure
 
