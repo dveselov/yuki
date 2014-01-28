@@ -44,17 +44,15 @@
 
 (defn train [source category]
   (let [source (language/normalize source)]
-    (dosync
-      (do
-        (doall (map #(inc-word-count %1 category) source))
-        (inc-documents-count category)))))
+    (do
+      (doall (map #(inc-word-count %1 category) source))
+      (inc-documents-count category))))
 
 (defn untrain [source category]
   (let [source (language/normalize source)]
-    (dosync
-      (do
-        (doall (map #(dec-word-count %1 category) source))
-        (dec-documents-count category)))))
+    (do
+      (doall (map #(dec-word-count %1 category) source))
+      (dec-documents-count category))))
 
 (defn calculate-word-probability [word category]
   (let [word-count (get-word-count word category)
