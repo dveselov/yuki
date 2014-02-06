@@ -8,12 +8,6 @@
   (testing
     (is (not (exists? 1 #{2 3 4})))))
 
-(deftest is-not-punctuation-test
-  (testing
-    (is (is-not-punctuation? \a)))
-  (testing
-    (is (not (is-not-punctuation? \!)))))
-
 (deftest is-not-common-word-test
   (testing
     (is (is-not-common-word? "arthur")))
@@ -22,11 +16,11 @@
 
 (deftest remove-punctuation-test
   (testing
-    (is (= (remove-punctuation "hello, world!") "hello world"))))
+    (is (= (remove-punctuation "hello, world!") "hello  world "))))
 
 (deftest remove-numbers-test
   (testing
-    (is (= (clojure.string/join "" (remove-numbers "answer is 42")) "answer is "))))
+    (is (= (clojure.string/join "" (remove-numbers "answer is 42")) "answer is  "))))
 
 (deftest remove-common-words-test
   (testing

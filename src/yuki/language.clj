@@ -3,15 +3,7 @@
 
 
 
-(def punctuation #{\~ \` \! \@ \" \#
-                   \№ \$ \; \% \^ \:
-                   \& \? \* \( \) \-
-                   \_ \+ \= \/ \\ \|
-                   \[ \] \{ \} \< \>
-                   \. \' \,})
-
-(def numbers #{\0 \1 \2 \3 \4
-               \5 \6 \7 \8 \9})
+(def punctuation #"[\~\`\!\@\"\#\№\$\;\%\^\:\&\?\*\(\)\-\_\+\=\/\\\|\[\]\{\}\<\>\.\'\,]")
 
 (def common-words
   (string/split-lines
@@ -20,24 +12,15 @@
 (defn exists? [element dictionary]
   (some #(= element %1) dictionary))
 
-(defn is-not-punctuation? [character]
-  (not
-    (exists? character punctuation)))
-
-(defn is-not-number? [character]
-  (not
-    (exists? character numbers)))
-
 (defn is-not-common-word? [word]
   (not
     (exists? word common-words)))
 
 (defn remove-punctuation [source]
-  (string/join ""
-    (filter is-not-punctuation? source)))
+  (string/replace source punctuation " "))
 
 (defn remove-numbers [source]
-  (filter is-not-number? source))
+  (string/replace source #"[0-9]{1,}" " "))
 
 (defn remove-common-words [source]
   (filter is-not-common-word? source))
