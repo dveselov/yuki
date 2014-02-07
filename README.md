@@ -10,7 +10,10 @@ Naive Bayes Classifier implemented in Clojure
 (bayes/train "meow" :kittens)
 (bayes/train "bark" :puppies)
 
-(bayes/classify "pshchhh") ;; => {:kittens -1.791759469228055, :puppies -1.0986122886681096}
+(bayes/classify "little kitten meows")
+;; => {:kittens -3.2958368660043287, :puppies -3.9889840465642745}
+(bayes/classify "big dog barks at you")
+;; => {:puppies -3.2958368660043287, :kittens -3.9889840465642745}
 ```
 
 ## License
