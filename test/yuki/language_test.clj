@@ -20,7 +20,7 @@
 
 (deftest remove-numbers-test
   (testing
-    (is (= (clojure.string/join "" (remove-numbers "answer is 42")) "answer is  "))))
+    (is (= (remove-numbers "answer is 42") "answer is  "))))
 
 (deftest remove-common-words-test
   (testing

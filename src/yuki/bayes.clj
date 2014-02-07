@@ -35,7 +35,7 @@
 
 (defn dec-documents-count [kw]
   (let [docs-count (get-documents-count kw)]
-    (if (> docs-count 1)
+    (if (> docs-count 0)
       (swap! documents assoc-in [kw] (dec docs-count)))))
 
 (defn total-documents-count []
@@ -55,21 +55,32 @@
       (dec-documents-count category))))
 
 (defn calculate-word-probability [word category]
-  (let [word-count (get-word-count word category)
+  (let [word-count             (get-word-count word category)
         words-in-this-category (words-in-category category)
-        total-unique-words (unique-words-count)]
+        total-unique-words     (unique-words-count)]
     (Math/log
       (/ (+ word-count 1) (+ total-unique-words words-in-this-category)))))
 
 (defn calculate-category-probability [source category]
-  (let [total-documents-count (total-documents-count)
+  (let [total-documents-count      (total-documents-count)
         documents-in-this-category (get-documents-count category)]
     (reduce +
       (Math/log (/ documents-in-this-category total-documents-count))
       (map #(calculate-word-probability %1 category) source))))
 
+(defn classify-source [source]
+  (into (hash-map)
+    (doall
+      (map
+        #(vector %1 (calculate-category-probability source %1)) (keys @categories)))))
+
 (defn classify [source]
-  (let [source (language/normalize source)]
-    (into {}
-      (doall
-        (map #(hash-map %1 (calculate-category-probability source %1)) (keys @categories))))))
+  (let [source  (language/normalize source)
+        results (into (hash-map) (classify-source source))]
+      (into (sorted-map-by #(> (%1 results) (%2 results))) results)))
+
+(defn reset []
+  (do
+    (reset! documents {})
+    (reset! categories {})))
+

@@ -9,14 +9,12 @@
     (do
       (train "testing kittens" :testing)
       (is (= (unique-words-count) 2))
-      (reset! documents {})
-      (reset! categories {})))
+      (reset)))
   (testing
     (do
       (train "testing kittens and kittens" :testing)
       (is (= (unique-words-count) 2))
-      (reset! documents {})
-      (reset! categories {}))))
+      (reset))))
 
 (deftest get-words-count-in-category-test
   (testing
@@ -27,5 +25,15 @@
     (do
       (train "kittens" :positive)
       (is (= (words-in-category :positive) 1))
-      (reset! documents {})
-      (reset! categories {}))))
+      (reset))))
+
+(deftest training-test
+  (testing
+    (do
+      (train "meow" :positive)
+      (train "bark" :negative)
+      (let [category (classify "meow")]
+        (is (= category {:negative -1.791759469228055, :positive -1.0986122886681096}))
+        (is (> (:positive category) (:negative category))))
+      (reset))))
+
