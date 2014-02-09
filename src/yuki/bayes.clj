@@ -54,25 +54,25 @@
       (doall (map #(dec-word-count %1 category) source))
       (dec-documents-count category))))
 
-(defn calculate-word-probability [word category]
+(defn word-probability [word category]
   (let [word-count             (get-word-count word category)
         words-in-this-category (words-in-category category)
         total-unique-words     (unique-words-count)]
     (Math/log
       (/ (+ word-count 1) (+ total-unique-words words-in-this-category)))))
 
-(defn calculate-category-probability [source category]
+(defn category-probability [source category]
   (let [total-documents-count      (total-documents-count)
         documents-in-this-category (get-documents-count category)]
     (reduce +
       (Math/log (/ documents-in-this-category total-documents-count))
-      (map #(calculate-word-probability %1 category) source))))
+      (map #(word-probability %1 category) source))))
 
 (defn classify-source [source]
   (into (hash-map)
     (doall
       (map
-        #(vector %1 (calculate-category-probability source %1)) (keys @categories)))))
+        #(vector %1 (category-probability source %1)) (keys @categories)))))
 
 (defn classify [source]
   (let [source  (language/normalize source)
