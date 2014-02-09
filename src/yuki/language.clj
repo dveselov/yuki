@@ -4,6 +4,7 @@
 
 
 (def punctuation #"[\~\`\!\@\"\#\№\$\;\%\^\:\&\?\*\(\)\-\_\+\=\/\\\|\[\]\{\}\<\>\.\'\,]")
+(def numbers #"[0-9]{1,}")
 
 (def common-words
   (string/split-lines
@@ -20,7 +21,7 @@
   (string/replace source punctuation " "))
 
 (defn remove-numbers [source]
-  (string/replace source #"[0-9]{1,}" " "))
+  (string/replace source numbers " "))
 
 (defn remove-common-words [source]
   (filter is-not-common-word? source))
