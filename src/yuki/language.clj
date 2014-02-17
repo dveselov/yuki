@@ -31,7 +31,7 @@
 
 (defn get-stem [word]
   (let [stem (first (re-find #"(\w+?)(?=ing$|ed$|able$|ly$|es$|s$|ny$)" word))]
-    (if stem stem word))) ;; TODO:
+    (or stem word))) ;; TODO:
 
 (defn get-stems [source]
   (map get-stem source))
