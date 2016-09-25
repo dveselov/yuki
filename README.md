@@ -1,5 +1,4 @@
-# yuki [![Build Status](https://travis-ci.org/tyrannosaurus/yuki.png?branch=master)](https://travis-ci.org/tyrannosaurus/yuki)
-
+# yuki
 Naive Bayes Classifier implemented in Clojure
 
 ## Usage
